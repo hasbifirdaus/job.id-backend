@@ -1,0 +1,12 @@
+[
+  {"id":1,"name":"Software Engineering"},
+  {"id":2,"name":"Data Science"},
+  {"id":3,"name":"Product Management"},
+  {"id":4,"name":"Design (UI/UX)"},
+  {"id":5,"name":"Marketing"},
+  {"id":6,"name":"Sales"},
+  {"id":7,"name":"Customer Support"},
+  {"id":8,"name":"Human Resources"},
+  {"id":9,"name":"Finance & Accounting"},
+  {"id":10,"name":"Operations"}
+]

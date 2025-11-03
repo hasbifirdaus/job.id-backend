@@ -1,0 +1,102 @@
+[
+  {
+    "name": "TechnoCorp Indonesia",
+    "email": "hr@technocorp.id",
+    "phone": "021-555-0101",
+    "description": "Perusahaan startup teknologi yang fokus pada platform marketplace.",
+    "location": "Jakarta Selatan",
+    "logo_image_url": null,
+    "created_at": "2024-01-02T08:00:00.000Z",
+    "updated_at": "2024-01-02T08:00:00.000Z"
+  },
+  {
+    "name": "FinancePlus",
+    "email": "careers@financeplus.co.id",
+    "phone": "021-555-0202",
+    "description": "Perusahaan fintech yang bergerak di layanan pembayaran dan kredit mikro.",
+    "location": "Jakarta Pusat",
+    "logo_image_url": null,
+    "created_at": "2024-02-15T08:00:00.000Z",
+    "updated_at": "2024-02-15T08:00:00.000Z"
+  },
+  {
+    "name": "Creative Studio",
+    "email": "hello@creativestudio.id",
+    "phone": "022-700-3003",
+    "description": "Agensi digital dan desain UI/UX.",
+    "location": "Bandung",
+    "logo_image_url": null,
+    "created_at": "2024-03-01T08:00:00.000Z",
+    "updated_at": "2024-03-01T08:00:00.000Z"
+  },
+  {
+    "name": "LogiMove",
+    "email": "talent@logimove.co.id",
+    "phone": "061-400-4004",
+    "description": "Perusahaan logistik dengan jaringan nasional.",
+    "location": "Medan",
+    "logo_image_url": null,
+    "created_at": "2024-04-05T08:00:00.000Z",
+    "updated_at": "2024-04-05T08:00:00.000Z"
+  },
+  {
+    "name": "AgroMakmur",
+    "email": "hr@agromakmur.id",
+    "phone": "0711-500-5005",
+    "description": "Perusahaan agritech yang fokus pada solusi pertanian.",
+    "location": "Palembang",
+    "logo_image_url": null,
+    "created_at": "2024-05-10T08:00:00.000Z",
+    "updated_at": "2024-05-10T08:00:00.000Z"
+  },
+  {
+    "name": "EduSmart",
+    "email": "jobs@edusmart.id",
+    "phone": "0361-600-6006",
+    "description": "Platform edtech untuk pembelajaran digital.",
+    "location": "Denpasar",
+    "logo_image_url": null,
+    "created_at": "2024-06-12T08:00:00.000Z",
+    "updated_at": "2024-06-12T08:00:00.000Z"
+  },
+  {
+    "name": "RetailOne",
+    "email": "careers@retailone.id",
+    "phone": "0751-700-7007",
+    "description": "Perusahaan retail omnichannel.",
+    "location": "Balikpapan",
+    "logo_image_url": null,
+    "created_at": "2024-07-01T08:00:00.000Z",
+    "updated_at": "2024-07-01T08:00:00.000Z"
+  },
+  {
+    "name": "GreenEnergy",
+    "email": "talent@greenenergy.co.id",
+    "phone": "022-800-8008",
+    "description": "Perusahaan energi terbarukan.",
+    "location": "Makassar",
+    "logo_image_url": null,
+    "created_at": "2024-08-08T08:00:00.000Z",
+    "updated_at": "2024-08-08T08:00:00.000Z"
+  },
+  {
+    "name": "MedsCare",
+    "email": "hr@medscare.id",
+    "phone": "021-900-9009",
+    "description": "Startup layanan kesehatan digital.",
+    "location": "Jakarta Barat",
+    "logo_image_url": null,
+    "created_at": "2024-09-09T08:00:00.000Z",
+    "updated_at": "2024-09-09T08:00:00.000Z"
+  },
+  {
+    "name": "TravelGo",
+    "email": "jobs@travelgo.id",
+    "phone": "0365-101-1010",
+    "description": "Platform pemesanan perjalanan dan akomodasi.",
+    "location": "Surabaya",
+    "logo_image_url": null,
+    "created_at": "2024-10-10T08:00:00.000Z",
+    "updated_at": "2024-10-10T08:00:00.000Z"
+  }
+]

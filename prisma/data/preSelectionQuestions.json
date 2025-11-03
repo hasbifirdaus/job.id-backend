@@ -1,0 +1,754 @@
+[
+  {
+    "id": 1,
+    "test_id": 1,
+    "question": "Apa yang dimaksud dengan virtual DOM di React?",
+    "option_a": "Representasi virtual dari DOM yang disimpan di memori",
+    "option_b": "DOM yang berjalan di server",
+    "option_c": "DOM pada device mobile saja",
+    "option_d": "DOM yang sudah terkompresi",
+    "correct_answer": "A"
+  },
+  {
+    "id": 2,
+    "test_id": 1,
+    "question": "Bagaimana cara memperbarui state di React class component?",
+    "option_a": "this.state = { ... }",
+    "option_b": "this.setState()",
+    "option_c": "updateState()",
+    "option_d": "set_state()",
+    "correct_answer": "B"
+  },
+  {
+    "id": 3,
+    "test_id": 1,
+    "question": "Mana method lifecycle yang dipanggil setelah component mount?",
+    "option_a": "componentDidMount",
+    "option_b": "componentWillMount",
+    "option_c": "shouldComponentUpdate",
+    "option_d": "componentDidUpdate",
+    "correct_answer": "A"
+  },
+  {
+    "id": 4,
+    "test_id": 1,
+    "question": "Apa keuntungan menggunakan TypeScript pada project React?",
+    "option_a": "Menambah ukuran bundle",
+    "option_b": "Type safety dan autocompletion",
+    "option_c": "Membuat styling lebih mudah",
+    "option_d": "Mempercepat runtime",
+    "correct_answer": "B"
+  },
+  {
+    "id": 5,
+    "test_id": 1,
+    "question": "Bagaimana cara membuat hook custom di React?",
+    "option_a": "Membuat function yang namanya diawali 'use'",
+    "option_b": "Membuat class yang extend Hook",
+    "option_c": "Menulis fungsi biasa tanpa aturan nama",
+    "option_d": "Menggunakan HOC",
+    "correct_answer": "A"
+  },
+  {
+    "id": 6,
+    "test_id": 1,
+    "question": "Apa itu prop drilling di React?",
+    "option_a": "Mengirim props terlalu dalam antar komponen",
+    "option_b": "Menambah performa render",
+    "option_c": "Mempercepat pengambilan data",
+    "option_d": "Menyalin state global",
+    "correct_answer": "A"
+  },
+  {
+    "id": 7,
+    "test_id": 1,
+    "question": "Library manajemen state yang populer di React?",
+    "option_a": "Redux",
+    "option_b": "Axios",
+    "option_c": "jQuery",
+    "option_d": "Bootstrap",
+    "correct_answer": "A"
+  },
+  {
+    "id": 8,
+    "test_id": 1,
+    "question": "Apa perbedaan useEffect dan useLayoutEffect?",
+    "option_a": "Timing eksekusi sebelum dan sesudah render",
+    "option_b": "Tidak ada perbedaan",
+    "option_c": "useLayoutEffect hanya di SSR",
+    "option_d": "useEffect hanya di server",
+    "correct_answer": "A"
+  },
+  {
+    "id": 9,
+    "test_id": 1,
+    "question": "Bagaimana cara meminimalkan re-render di React?",
+    "option_a": "Gunakan React.memo dan useCallback",
+    "option_b": "Render semua komponen setiap waktu",
+    "option_c": "Hapus semua state",
+    "option_d": "Gunakan class component",
+    "correct_answer": "A"
+  },
+  {
+    "id": 10,
+    "test_id": 1,
+    "question": "Apa itu controlled component di React?",
+    "option_a": "Input yang dikontrol oleh state React",
+    "option_b": "Input HTML biasa",
+    "option_c": "Komponen tanpa state",
+    "option_d": "Hanya tersedia di React Native",
+    "correct_answer": "A"
+  },
+  {
+    "id": 11,
+    "test_id": 1,
+    "question": "Apa fungsi useRef di React?",
+    "option_a": "Menyimpan nilai yang tidak memicu render",
+    "option_b": "Mengatur ulang state",
+    "option_c": "Men-trigger re-render",
+    "option_d": "Membuat hook baru",
+    "correct_answer": "A"
+  },
+  {
+    "id": 12,
+    "test_id": 1,
+    "question": "Hook untuk mengelola side-effect di React?",
+    "option_a": "useEffect",
+    "option_b": "useState",
+    "option_c": "useRef",
+    "option_d": "useMemo",
+    "correct_answer": "A"
+  },
+  {
+    "id": 13,
+    "test_id": 1,
+    "question": "Apa itu JSX?",
+    "option_a": "Sintaks mirip HTML untuk menulis UI React",
+    "option_b": "Bahasa backend",
+    "option_c": "Framework CSS",
+    "option_d": "Fungsi event handler",
+    "correct_answer": "A"
+  },
+  {
+    "id": 14,
+    "test_id": 1,
+    "question": "React Router digunakan untuk?",
+    "option_a": "Navigasi halaman di React SPA",
+    "option_b": "Mengatur state global",
+    "option_c": "Menangani API call",
+    "option_d": "Menambah performa render",
+    "correct_answer": "A"
+  },
+  {
+    "id": 15,
+    "test_id": 1,
+    "question": "useMemo digunakan untuk?",
+    "option_a": "Menghindari perhitungan ulang yang mahal",
+    "option_b": "Mengupdate state",
+    "option_c": "Render komponen",
+    "option_d": "Menambah event listener",
+    "correct_answer": "A"
+  },
+  {
+    "id": 16,
+    "test_id": 1,
+    "question": "React.Fragment digunakan untuk?",
+    "option_a": "Membungkus elemen tanpa menambah node DOM",
+    "option_b": "Membuat fragment database",
+    "option_c": "Menambah key unik",
+    "option_d": "Menyimpan state sementara",
+    "correct_answer": "A"
+  },
+  {
+    "id": 17,
+    "test_id": 1,
+    "question": "React.StrictMode berfungsi untuk?",
+    "option_a": "Menjalankan pemeriksaan tambahan saat development",
+    "option_b": "Meningkatkan performa produksi",
+    "option_c": "Menyembunyikan error",
+    "option_d": "Menghapus warning",
+    "correct_answer": "A"
+  },
+  {
+    "id": 18,
+    "test_id": 1,
+    "question": "Apa itu reconciliation di React?",
+    "option_a": "Proses membandingkan virtual DOM untuk update minimal",
+    "option_b": "Membuat komponen baru",
+    "option_c": "Menyalin state antar komponen",
+    "option_d": "Menulis ulang CSS",
+    "correct_answer": "A"
+  },
+  {
+    "id": 19,
+    "test_id": 1,
+    "question": "React.memo digunakan untuk?",
+    "option_a": "Mencegah re-render jika props tidak berubah",
+    "option_b": "Menyimpan data ke localStorage",
+    "option_c": "Menghapus state",
+    "option_d": "Menambahkan efek",
+    "correct_answer": "A"
+  },
+  {
+    "id": 20,
+    "test_id": 1,
+    "question": "Apa itu lazy loading di React?",
+    "option_a": "Menunda pemuatan komponen hingga diperlukan",
+    "option_b": "Memuat semua komponen di awal",
+    "option_c": "Mempercepat build time",
+    "option_d": "Hanya untuk SSR",
+    "correct_answer": "A"
+  },
+  {
+    "id": 21,
+    "test_id": 1,
+    "question": "useContext digunakan untuk?",
+    "option_a": "Mengakses context tanpa prop drilling",
+    "option_b": "Mengubah state global",
+    "option_c": "Menambah hook baru",
+    "option_d": "Menjalankan side effect",
+    "correct_answer": "A"
+  },
+  {
+    "id": 22,
+    "test_id": 1,
+    "question": "React Portal digunakan untuk?",
+    "option_a": "Render komponen di luar hierarki DOM utama",
+    "option_b": "Navigasi halaman",
+    "option_c": "Menambah performa",
+    "option_d": "Membuat router baru",
+    "correct_answer": "A"
+  },
+  {
+    "id": 23,
+    "test_id": 1,
+    "question": "Apa fungsi React.Suspense?",
+    "option_a": "Menangani loading asynchronous components",
+    "option_b": "Membuat state global",
+    "option_c": "Menambah cache API",
+    "option_d": "Mengubah DOM manual",
+    "correct_answer": "A"
+  },
+  {
+    "id": 24,
+    "test_id": 1,
+    "question": "Bagaimana cara menangani error di React component?",
+    "option_a": "Gunakan ErrorBoundary",
+    "option_b": "Gunakan try/catch di JSX",
+    "option_c": "Gunakan useError",
+    "option_d": "Tidak bisa dilakukan",
+    "correct_answer": "A"
+  },
+  {
+    "id": 25,
+    "test_id": 1,
+    "question": "React key digunakan untuk?",
+    "option_a": "Membantu React mengidentifikasi elemen unik dalam list",
+    "option_b": "Mengamankan komponen",
+    "option_c": "Membuat state baru",
+    "option_d": "Meningkatkan performa network",
+    "correct_answer": "A"
+  },
+
+  {
+    "id": 26,
+    "test_id": 2,
+    "question": "Apa itu RESTful API?",
+    "option_a": "API yang menggunakan GraphQL",
+    "option_b": "Konsep arsitektur untuk HTTP API",
+    "option_c": "Sebuah database",
+    "option_d": "Framework backend",
+    "correct_answer": "B"
+  },
+  {
+    "id": 27,
+    "test_id": 2,
+    "question": "Apa fungsi middleware di Express.js?",
+    "option_a": "Membuat tampilan",
+    "option_b": "Memproses request sebelum mencapai route handler",
+    "option_c": "Menangani database",
+    "option_d": "Membangun frontend",
+    "correct_answer": "B"
+  },
+  {
+    "id": 28,
+    "test_id": 2,
+    "question": "Bagaimana cara menangani asynchronous errors di Node.js (async/await)?",
+    "option_a": "Wrap di try/catch",
+    "option_b": "Gunakan setTimeout",
+    "option_c": "Tidak perlu menanganinya",
+    "option_d": "Gunakan forEach",
+    "correct_answer": "A"
+  },
+  {
+    "id": 29,
+    "test_id": 2,
+    "question": "Apa manfaat menggunakan Docker dalam development backend?",
+    "option_a": "Isolasi environment dan reproduktibilitas",
+    "option_b": "Menambah beban server",
+    "option_c": "Mengganti database",
+    "option_d": "Mempercepat JavaScript runtime",
+    "correct_answer": "A"
+  },
+  {
+    "id": 30,
+    "test_id": 2,
+    "question": "Apa itu ORM dan contohnya untuk Node.js?",
+    "option_a": "Object Relational Mapping, contoh Sequelize/Prisma",
+    "option_b": "Organisasi Resource Management",
+    "option_c": "Optimasi Runtime Memory",
+    "option_d": "Open Resource Middleware",
+    "correct_answer": "A"
+  },
+  {
+    "id": 31,
+    "test_id": 2,
+    "question": "Apa fungsi dari package.json di proyek Node.js?",
+    "option_a": "Menyimpan konfigurasi dan dependencies proyek",
+    "option_b": "Menyimpan data pengguna",
+    "option_c": "Menjalankan server",
+    "option_d": "Membuat schema database",
+    "correct_answer": "A"
+  },
+  {
+    "id": 32,
+    "test_id": 2,
+    "question": "Bagaimana cara membuat server HTTP dasar di Node.js?",
+    "option_a": "Menggunakan http.createServer()",
+    "option_b": "Gunakan fs.readFile()",
+    "option_c": "Gunakan path.join()",
+    "option_d": "Gunakan os.platform()",
+    "correct_answer": "A"
+  },
+  {
+    "id": 33,
+    "test_id": 2,
+    "question": "Apa itu event loop pada Node.js?",
+    "option_a": "Mekanisme untuk menangani operasi asynchronous",
+    "option_b": "Library tambahan Node",
+    "option_c": "Proses pengulangan for loop",
+    "option_d": "Cara memanggil API",
+    "correct_answer": "A"
+  },
+  {
+    "id": 34,
+    "test_id": 2,
+    "question": "Apa keuntungan menggunakan TypeScript di backend Node.js?",
+    "option_a": "Type safety dan IDE autocompletion",
+    "option_b": "Meningkatkan performa runtime",
+    "option_c": "Membuat kode lebih lambat",
+    "option_d": "Hanya untuk frontend",
+    "correct_answer": "A"
+  },
+  {
+    "id": 35,
+    "test_id": 2,
+    "question": "Bagaimana cara menghubungkan Node.js ke PostgreSQL menggunakan Prisma?",
+    "option_a": "Konfigurasi datasource di schema.prisma dan jalankan npx prisma generate",
+    "option_b": "Gunakan fs.connect()",
+    "option_c": "Tambahkan library axios",
+    "option_d": "Tidak bisa dilakukan",
+    "correct_answer": "A"
+  },
+  {
+    "id": 36,
+    "test_id": 2,
+    "question": "Apa fungsi dari Express Router?",
+    "option_a": "Memisahkan route menjadi modul modular",
+    "option_b": "Mengatur database connection",
+    "option_c": "Menjalankan build frontend",
+    "option_d": "Mengatur environment variable",
+    "correct_answer": "A"
+  },
+  {
+    "id": 37,
+    "test_id": 2,
+    "question": "Apa itu middleware error handling di Express?",
+    "option_a": "Fungsi dengan empat parameter untuk menangani error global",
+    "option_b": "Fungsi yang menampilkan log",
+    "option_c": "File konfigurasi environment",
+    "option_d": "Utility untuk upload file",
+    "correct_answer": "A"
+  },
+  {
+    "id": 38,
+    "test_id": 2,
+    "question": "Bagaimana cara mengamankan API endpoint?",
+    "option_a": "Gunakan JWT authentication dan middleware authorization",
+    "option_b": "Simpan password di plain text",
+    "option_c": "Gunakan GET untuk semua request",
+    "option_d": "Hilangkan validasi",
+    "correct_answer": "A"
+  },
+  {
+    "id": 39,
+    "test_id": 2,
+    "question": "Apa fungsi dotenv di Node.js?",
+    "option_a": "Membaca environment variables dari file .env",
+    "option_b": "Menyimpan file log",
+    "option_c": "Menjalankan server",
+    "option_d": "Menghapus cache",
+    "correct_answer": "A"
+  },
+  {
+    "id": 40,
+    "test_id": 2,
+    "question": "Apa itu cluster mode di Node.js?",
+    "option_a": "Menjalankan beberapa instance Node.js agar performa meningkat",
+    "option_b": "Menjalankan query database",
+    "option_c": "Membuat banyak route",
+    "option_d": "Fitur Express Router",
+    "correct_answer": "A"
+  },
+  {
+    "id": 41,
+    "test_id": 2,
+    "question": "Apa itu middleware body-parser?",
+    "option_a": "Untuk mem-parsing request body ke JSON",
+    "option_b": "Untuk parsing file static",
+    "option_c": "Untuk koneksi database",
+    "option_d": "Untuk mengatur logging",
+    "correct_answer": "A"
+  },
+  {
+    "id": 42,
+    "test_id": 2,
+    "question": "Apa itu CORS di backend?",
+    "option_a": "Mekanisme yang mengatur izin akses antar domain",
+    "option_b": "Sebuah format file",
+    "option_c": "Metode enkripsi data",
+    "option_d": "Sebuah middleware logging",
+    "correct_answer": "A"
+  },
+  {
+    "id": 43,
+    "test_id": 2,
+    "question": "Apa itu load balancing?",
+    "option_a": "Distribusi beban ke beberapa server untuk meningkatkan kinerja",
+    "option_b": "Teknik debugging",
+    "option_c": "Metode caching data",
+    "option_d": "Strategi CI/CD",
+    "correct_answer": "A"
+  },
+  {
+    "id": 44,
+    "test_id": 2,
+    "question": "Apa itu API rate limiting?",
+    "option_a": "Membatasi jumlah request ke API dalam waktu tertentu",
+    "option_b": "Mempercepat koneksi API",
+    "option_c": "Menambah log API",
+    "option_d": "Menghapus cache",
+    "correct_answer": "A"
+  },
+  {
+    "id": 45,
+    "test_id": 2,
+    "question": "Apa fungsi async/await dibanding callback?",
+    "option_a": "Membuat kode asynchronous lebih mudah dibaca dan ditulis",
+    "option_b": "Menghapus semua error",
+    "option_c": "Meningkatkan performa CPU",
+    "option_d": "Mengubah tipe data",
+    "correct_answer": "A"
+  },
+  {
+    "id": 46,
+    "test_id": 2,
+    "question": "Apa itu WebSocket?",
+    "option_a": "Protokol komunikasi dua arah antara client dan server",
+    "option_b": "Framework CSS",
+    "option_c": "Sebuah API REST",
+    "option_d": "Server database",
+    "correct_answer": "A"
+  },
+  {
+    "id": 47,
+    "test_id": 2,
+    "question": "Apa fungsi API Gateway?",
+    "option_a": "Mengatur, mengamankan, dan mengelola lalu lintas API",
+    "option_b": "Mengatur layout halaman",
+    "option_c": "Menghapus middleware",
+    "option_d": "Menjalankan query SQL",
+    "correct_answer": "A"
+  },
+  {
+    "id": 48,
+    "test_id": 2,
+    "question": "Apa itu cron job di Node.js?",
+    "option_a": "Penjadwalan tugas otomatis di waktu tertentu",
+    "option_b": "Fungsi logging",
+    "option_c": "Fitur routing",
+    "option_d": "Mekanisme autentikasi",
+    "correct_answer": "A"
+  },
+  {
+    "id": 49,
+    "test_id": 2,
+    "question": "Apa itu microservices architecture?",
+    "option_a": "Pembagian aplikasi menjadi layanan kecil yang independen",
+    "option_b": "Satu service besar yang menangani semua fungsi",
+    "option_c": "Sebuah framework Node",
+    "option_d": "Teknik caching data",
+    "correct_answer": "A"
+  },
+  {
+    "id": 50,
+    "test_id": 2,
+    "question": "Apa itu GraphQL?",
+    "option_a": "Bahasa query untuk API yang fleksibel dan efisien",
+    "option_b": "Sebuah ORM",
+    "option_c": "Framework Express",
+    "option_d": "Database relational",
+    "correct_answer": "A"
+  },
+
+  {
+    "id": 51,
+    "test_id": 3,
+    "question": "Apa itu ETL dalam data engineering?",
+    "option_a": "Extract, Transform, Load",
+    "option_b": "Evaluate, Transfer, Log",
+    "option_c": "Encode, Translate, Link",
+    "option_d": "Encrypt, Trace, Log",
+    "correct_answer": "A"
+  },
+  {
+    "id": 52,
+    "test_id": 3,
+    "question": "Bahasa yang paling umum digunakan untuk analisis data adalah?",
+    "option_a": "Python",
+    "option_b": "C++",
+    "option_c": "Swift",
+    "option_d": "Go",
+    "correct_answer": "A"
+  },
+  {
+    "id": 53,
+    "test_id": 3,
+    "question": "Library Python untuk manipulasi data tabular?",
+    "option_a": "Pandas",
+    "option_b": "TensorFlow",
+    "option_c": "NumPy",
+    "option_d": "Flask",
+    "correct_answer": "A"
+  },
+  {
+    "id": 54,
+    "test_id": 3,
+    "question": "Apa fungsi SQL GROUP BY?",
+    "option_a": "Mengelompokkan hasil berdasarkan kolom tertentu",
+    "option_b": "Menghapus tabel",
+    "option_c": "Membuat user",
+    "option_d": "Menambah index",
+    "correct_answer": "A"
+  },
+  {
+    "id": 55,
+    "test_id": 3,
+    "question": "Apa itu data warehouse?",
+    "option_a": "Pusat penyimpanan data terintegrasi untuk analisis",
+    "option_b": "Database operasional",
+    "option_c": "Tempat file log",
+    "option_d": "Folder backup",
+    "correct_answer": "A"
+  },
+  {
+    "id": 56,
+    "test_id": 3,
+    "question": "Apa itu Big Data?",
+    "option_a": "Data dalam volume besar yang sulit diproses dengan alat tradisional",
+    "option_b": "Data dengan format kecil",
+    "option_c": "File CSV",
+    "option_d": "Data dummy",
+    "correct_answer": "A"
+  },
+  {
+    "id": 57,
+    "test_id": 3,
+    "question": "Apache Kafka digunakan untuk?",
+    "option_a": "Streaming data secara real-time",
+    "option_b": "Menyimpan file statis",
+    "option_c": "Menjalankan query SQL",
+    "option_d": "Membuat UI dashboard",
+    "correct_answer": "A"
+  },
+  {
+    "id": 58,
+    "test_id": 3,
+    "question": "Apa itu data pipeline?",
+    "option_a": "Serangkaian proses untuk memindahkan dan mengolah data",
+    "option_b": "Format file data",
+    "option_c": "Tipe database",
+    "option_d": "Bahasa query",
+    "correct_answer": "A"
+  },
+  {
+    "id": 59,
+    "test_id": 3,
+    "question": "Bahasa yang digunakan untuk query di database relasional?",
+    "option_a": "SQL",
+    "option_b": "HTML",
+    "option_c": "Python",
+    "option_d": "JSON",
+    "correct_answer": "A"
+  },
+  {
+    "id": 60,
+    "test_id": 3,
+    "question": "Apa itu normalization dalam database?",
+    "option_a": "Proses mengurangi redundansi data",
+    "option_b": "Menghapus semua data",
+    "option_c": "Menambah index",
+    "option_d": "Menyalin tabel",
+    "correct_answer": "A"
+  },
+  {
+    "id": 61,
+    "test_id": 3,
+    "question": "Apa itu primary key di database?",
+    "option_a": "Kolom unik untuk mengidentifikasi baris",
+    "option_b": "Kunci untuk mengenkripsi data",
+    "option_c": "Foreign key",
+    "option_d": "Index duplikat",
+    "correct_answer": "A"
+  },
+  {
+    "id": 62,
+    "test_id": 3,
+    "question": "Apa itu foreign key di SQL?",
+    "option_a": "Relasi antar tabel berdasarkan kolom tertentu",
+    "option_b": "Kunci utama tabel",
+    "option_c": "Tipe data string",
+    "option_d": "Fungsi agregat",
+    "correct_answer": "A"
+  },
+  {
+    "id": 63,
+    "test_id": 3,
+    "question": "Apa fungsi JOIN di SQL?",
+    "option_a": "Menggabungkan data dari dua atau lebih tabel",
+    "option_b": "Membuat index",
+    "option_c": "Menghapus tabel",
+    "option_d": "Membuat trigger",
+    "correct_answer": "A"
+  },
+  {
+    "id": 64,
+    "test_id": 3,
+    "question": "Apa itu index di database?",
+    "option_a": "Struktur data untuk mempercepat pencarian",
+    "option_b": "File backup",
+    "option_c": "Foreign key",
+    "option_d": "Cache memory",
+    "correct_answer": "A"
+  },
+  {
+    "id": 65,
+    "test_id": 3,
+    "question": "Bahasa query yang digunakan di BigQuery adalah?",
+    "option_a": "SQL",
+    "option_b": "Python",
+    "option_c": "C#",
+    "option_d": "Rust",
+    "correct_answer": "A"
+  },
+  {
+    "id": 66,
+    "test_id": 3,
+    "question": "Apache Airflow digunakan untuk?",
+    "option_a": "Menjadwalkan dan mengelola workflow data pipeline",
+    "option_b": "Membuat UI",
+    "option_c": "Menjalankan model AI",
+    "option_d": "Menambah cache",
+    "correct_answer": "A"
+  },
+  {
+    "id": 67,
+    "test_id": 3,
+    "question": "Apa itu data lake?",
+    "option_a": "Penyimpanan data mentah dalam berbagai format",
+    "option_b": "Database relasional",
+    "option_c": "Tempat backup log",
+    "option_d": "Alat visualisasi",
+    "correct_answer": "A"
+  },
+  {
+    "id": 68,
+    "test_id": 3,
+    "question": "Spark adalah...",
+    "option_a": "Framework pemrosesan data paralel besar",
+    "option_b": "Bahasa pemrograman",
+    "option_c": "Sistem cache",
+    "option_d": "Database relasional",
+    "correct_answer": "A"
+  },
+  {
+    "id": 69,
+    "test_id": 3,
+    "question": "Apa itu OLAP?",
+    "option_a": "Online Analytical Processing",
+    "option_b": "Offline Application Layer",
+    "option_c": "Open Layer API",
+    "option_d": "Output Logic Analysis",
+    "correct_answer": "A"
+  },
+  {
+    "id": 70,
+    "test_id": 3,
+    "question": "Apa itu OLTP?",
+    "option_a": "Online Transaction Processing",
+    "option_b": "Offline Transaction Program",
+    "option_c": "Output Layer Training",
+    "option_d": "Open Terminal Process",
+    "correct_answer": "A"
+  },
+  {
+    "id": 71,
+    "test_id": 3,
+    "question": "Data visualization digunakan untuk?",
+    "option_a": "Menyajikan data dalam bentuk visual agar mudah dipahami",
+    "option_b": "Menghapus data",
+    "option_c": "Menambah cache",
+    "option_d": "Menulis log",
+    "correct_answer": "A"
+  },
+  {
+    "id": 72,
+    "test_id": 3,
+    "question": "Apa fungsi dashboard analytics?",
+    "option_a": "Menampilkan metrik kinerja dalam visualisasi interaktif",
+    "option_b": "Menyimpan data mentah",
+    "option_c": "Menjalankan script Python",
+    "option_d": "Membuat schema SQL",
+    "correct_answer": "A"
+  },
+  {
+    "id": 73,
+    "test_id": 3,
+    "question": "Apa itu data governance?",
+    "option_a": "Kebijakan dan proses untuk memastikan kualitas dan keamanan data",
+    "option_b": "Penghapusan data lama",
+    "option_c": "Proses ETL",
+    "option_d": "Backup server",
+    "correct_answer": "A"
+  },
+  {
+    "id": 74,
+    "test_id": 3,
+    "question": "Apa itu anomaly detection dalam analitik data?",
+    "option_a": "Identifikasi data yang menyimpang dari pola normal",
+    "option_b": "Pembuatan laporan rutin",
+    "option_c": "Menambah cache",
+    "option_d": "Menyalin tabel",
+    "correct_answer": "A"
+  },
+  {
+    "id": 75,
+    "test_id": 3,
+    "question": "Apa itu descriptive analytics?",
+    "option_a": "Analisis yang menjelaskan apa yang telah terjadi",
+    "option_b": "Prediksi masa depan",
+    "option_c": "Optimasi performa",
+    "option_d": "Menjalankan model AI",
+    "correct_answer": "A"
+  }
+]
