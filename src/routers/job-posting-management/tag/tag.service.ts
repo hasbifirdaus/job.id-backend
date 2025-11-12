@@ -1,4 +1,4 @@
-import prisma from "../../lib/config/prisma";
+import prisma from "../../../lib/config/prisma";
 
 export const getAlltags = async () => {
   return await prisma.tags.findMany({

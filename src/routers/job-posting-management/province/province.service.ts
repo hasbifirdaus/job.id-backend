@@ -1,4 +1,4 @@
-import prisma from "../../lib/config/prisma";
+import prisma from "../../../lib/config/prisma";
 
 export const createProvince = async (name: string) => {
   return await prisma.provinces.create({

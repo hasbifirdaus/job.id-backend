@@ -3,6 +3,10 @@ import { ApplicationStatus } from "../../generated/prisma";
 
 export const findApplicantsByJob = async (
   jobId: number,
+  page: number = 1,
+  limit: number = 10,
+  sortKey: string = "created_at",
+  sortOrder: "asc" | "desc" = "asc",
   name?: string,
   minAge?: number,
   maxAge?: number,
@@ -19,6 +23,9 @@ export const findApplicantsByJob = async (
     whereClause.user.education = { contains: education, mode: "insensitive" };
   if (expectedSalary) whereClause.expected_salary = { lte: expectedSalary };
 
+  const skip = (page - 1) * limit;
+  const take = limit;
+
   const applicants = await prisma.applications.findMany({
     where: whereClause,
     include: {
@@ -30,20 +37,28 @@ export const findApplicantsByJob = async (
           dob: true,
           education: true,
           profile_image_url: true,
+          address: true,
+          gender: true,
         },
       },
     },
-    orderBy: { created_at: "asc" },
+    orderBy: { [sortKey]: sortOrder },
+    skip,
+    take,
   });
 
   const now = new Date();
-  return applicants.filter((app) => {
-    if (!app.user.dob) return true;
+  const filteredByAge = applicants.filter((app) => {
+    if (!app.user?.dob) return true;
     const age = now.getFullYear() - app.user.dob.getFullYear();
     if (minAge && age < minAge) return false;
     if (maxAge && age > maxAge) return false;
     return true;
   });
+
+  const total = await prisma.applications.count({ where: whereClause });
+
+  return { applicants: filteredByAge, total };
 };
 
 export const findApplicationDetail = async (id: number) => {

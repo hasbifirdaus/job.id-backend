@@ -8,10 +8,24 @@ import {
 export const getApplicantsByJob = async (req: Request, res: Response) => {
   try {
     const jobId = Number(req.params.jobId);
-    const { name, minAge, maxAge, education, expected_salary } = req.query;
+    const {
+      name,
+      minAge,
+      maxAge,
+      education,
+      expected_salary,
+      page = "1",
+      limit = "10",
+      sortKey = "created_at",
+      sortOrder = "asc",
+    } = req.query;
 
-    const applicants = await findApplicantsByJob(
+    const { applicants, total } = await findApplicantsByJob(
       jobId,
+      Number(page),
+      Number(limit),
+      String(sortKey),
+      String(sortOrder) as "asc" | "desc",
       name as string,
       minAge ? Number(minAge) : undefined,
       maxAge ? Number(maxAge) : undefined,
@@ -22,6 +36,9 @@ export const getApplicantsByJob = async (req: Request, res: Response) => {
     res.json({
       message: "Applicants fetched successfully",
       applicants,
+      total,
+      page: Number(page),
+      limit: Number(limit),
     });
   } catch (err: any) {
     res.status(500).json({ error: err.message });

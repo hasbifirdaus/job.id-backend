@@ -2,23 +2,26 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import authRoutes from "./routers/auth/auth.routes";
 import preSelectionRoutes from "./routers/preSelection/preSelection.routes";
-import jobRoutes from "./routers/job/job.routes";
-import tagRoutes from "./routers/tag/tag.routes";
-import categoryRoutes from "./routers/category/category.routes";
-import provinceRoutes from "./routers/province/province.routes";
-import cityRoutes from "./routers/city/city.routes";
+import jobRoutes from "./routers/job-posting-management/job/job.routes";
+import tagRoutes from "./routers/job-posting-management/tag/tag.routes";
+import categoryRoutes from "./routers/job-posting-management/category/category.routes";
+import provinceRoutes from "./routers/job-posting-management/province/province.routes";
+import cityRoutes from "./routers/job-posting-management/city/city.routes";
 import applicationsRoutes from "./routers/applications/applications.routes";
 import applicantRoutes from "./routers/applicant-management/applicant.routes";
 import interviewRoutes from "./routers/interview/interview.routes";
 import analyticsRoutes from "./routers/website-analytics/analytics.routes";
 import { scheduleInterviewReminder } from "./lib/cron/interviewReminder";
+import userRoutes from "./routers/users-jobseeker/user.routes";
+import userJobRoutes from "./routers/job-and-company-discovery/jobs/job.routes";
+import companyRoutes from "./routers/job-and-company-discovery/companies/company.routes";
 
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // asal frontend
-    credentials: true, // izinkan cookie / header auth
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -34,6 +37,9 @@ app.use("/api/applyjob", applicationsRoutes);
 app.use("/api/applicantmanagement", applicantRoutes);
 app.use("/api/interview", interviewRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/jobs", userJobRoutes);
+app.use("/api/companies", companyRoutes);
 
 scheduleInterviewReminder();
 
