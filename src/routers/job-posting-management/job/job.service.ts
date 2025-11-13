@@ -1,4 +1,4 @@
-import prisma from "../../lib/config/prisma";
+import prisma from "../../../lib/config/prisma";
 
 //create job
 export const ccreateJobService = async (company_id: number, data: any) => {

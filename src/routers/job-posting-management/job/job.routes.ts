@@ -6,7 +6,7 @@ import {
   updateJob,
   deleteJob,
 } from "./job.controller";
-import { authMiddleware } from "../../lib/middleware/auth.middleware";
+import { authMiddleware } from "../../../lib/middleware/auth.middleware";
 
 const jobRoutes = Router();
 

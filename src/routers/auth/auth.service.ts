@@ -4,12 +4,11 @@ import jwt from "jsonwebtoken";
 import { UserRole } from "../../generated/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
-if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET_KEY is not defined in .env");
-}
+if (!JWT_SECRET) throw new Error("JWT_SECRET_KEY is not defined in .env");
 
-export const registerService = async (data: any) => {
-  const { name, email, password, role } = data;
+// 🔹 Register Job Seeker
+export const registerJobSeekerService = async (data: any) => {
+  const { name, email, password } = data;
 
   const existingUser = await prisma.users.findUnique({ where: { email } });
   if (existingUser) throw new Error("Email already registered");
@@ -21,39 +20,65 @@ export const registerService = async (data: any) => {
       name,
       email,
       password: hashedPassword,
-      role: role || UserRole.JOB_SEEKER,
+      role: UserRole.JOB_SEEKER,
     },
   });
 
-  let newCompany = null;
-  if (role === UserRole.COMPANY_ADMIN) {
-    const existingCompany = await prisma.companies.findUnique({
-      where: { email },
-    });
-    if (existingCompany)
-      throw new Error("Company with this email already exists");
+  return { message: "Job Seeker registration successful", user: newUser };
+};
 
-    newCompany = await prisma.companies.create({
-      data: {
-        name: `${name}'s Company`,
-        email: email,
-        phone: "000000000000",
-        location: "Indonesia",
-        description: "Default company created upon registration.",
-      },
-    });
+// 🔹 Register Company Admin
+export const registerCompanyAdminService = async (data: any) => {
+  const {
+    name,
+    email,
+    password,
+    companyName,
+    companyPhone,
+    companyLocation,
+    companyDescription,
+  } = data;
 
-    await prisma.companyAdmins.create({
-      data: {
-        user_id: newUser.id,
-        company_id: newCompany.id,
-        is_primary: true,
-        role: "Owner",
-      },
-    });
-  }
+  const existingUser = await prisma.users.findUnique({ where: { email } });
+  if (existingUser) throw new Error("Email already registered");
+
+  const existingCompany = await prisma.companies.findUnique({
+    where: { email },
+  });
+  if (existingCompany) throw new Error("Company email already registered");
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = await prisma.users.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role: UserRole.COMPANY_ADMIN,
+    },
+  });
+
+  const newCompany = await prisma.companies.create({
+    data: {
+      name: companyName,
+      email,
+      phone: companyPhone,
+      location: companyLocation,
+      description: companyDescription || "Company created during registration",
+    },
+  });
+
+  await prisma.companyAdmins.create({
+    data: {
+      user_id: newUser.id,
+      company_id: newCompany.id,
+      is_primary: true,
+      role: "Owner",
+    },
+  });
+
   return {
-    message: "Registration successfull",
+    message: "Company Admin registration successful",
     user: newUser,
     company: newCompany,
   };
@@ -73,10 +98,10 @@ export const loginService = async (data: any) => {
     },
   });
 
-  if (!user) throw new Error("Invalid credentials");
+  if (!user) throw new Error("Invalid email or password");
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) throw new Error("invalid credentials");
+  if (!isPasswordValid) throw new Error("Invalid email or password");
 
   const company_id =
     user.role === UserRole.COMPANY_ADMIN
@@ -84,14 +109,20 @@ export const loginService = async (data: any) => {
       : null;
 
   const token = jwt.sign(
-    {
+    { id: user.id, email: user.email, role: user.role, company_id },
+    JWT_SECRET,
+    { expiresIn: "2d" }
+  );
+
+  return {
+    message: "Login successful",
+    token,
+    user: {
       id: user.id,
       email: user.email,
       role: user.role,
+      name: user.name,
       company_id,
     },
-    JWT_SECRET as string,
-    { expiresIn: "2d" }
-  );
-  return token;
+  };
 };

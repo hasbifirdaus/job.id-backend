@@ -6,7 +6,7 @@ import {
   updateTag,
   deleteTag,
 } from "./tag.controller";
-import { authMiddleware } from "../../lib/middleware/auth.middleware";
+import { authMiddleware } from "../../../lib/middleware/auth.middleware";
 
 const tagRoutes = Router();
 
