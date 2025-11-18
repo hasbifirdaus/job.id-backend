@@ -5,9 +5,7 @@ export const applyJob = async (req: any, res: Response) => {
   try {
     const userId = req.user.id;
     const { job_id, cover_letter, expected_salary } = req.body;
-
-    const cv_url = req.file?.path || null;
-    if (!cv_url) throw new Error("CV file is required");
+    const cv_url = req.file.path;
 
     const result = await applicationsService.applyJob(userId, {
       job_id,
@@ -15,6 +13,7 @@ export const applyJob = async (req: any, res: Response) => {
       cover_letter,
       expected_salary,
     });
+
     res.status(201).json({
       message: "Application submitted successfully",
       application: result,

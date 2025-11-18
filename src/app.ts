@@ -15,6 +15,8 @@ import { scheduleInterviewReminder } from "./lib/cron/interviewReminder";
 import userRoutes from "./routers/users-jobseeker/user.routes";
 import userJobRoutes from "./routers/job-and-company-discovery/jobs/job.routes";
 import companyRoutes from "./routers/job-and-company-discovery/companies/company.routes";
+import jobPostingRoutes from "./routers/job-posting/jobs.routes";
+import uploadRoutes from "./routers/job-posting/upload-banner/upload.routes";
 
 const app = express();
 
@@ -40,6 +42,8 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/jobs", userJobRoutes);
 app.use("/api/companies", companyRoutes);
+app.use("/api/jobPosting", jobPostingRoutes);
+app.use("/api/upload", uploadRoutes);
 
 scheduleInterviewReminder();
 

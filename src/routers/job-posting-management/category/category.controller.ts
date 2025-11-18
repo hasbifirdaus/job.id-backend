@@ -24,6 +24,10 @@ export const getAllCategories = async (
 ): Promise<void> => {
   try {
     const categories = await categoryService.getAllCategories();
-    res.status(200).json(categories);
-  } catch (error: any) {}
+    // PERUBAHAN: Mengirimkan data dalam format { data: [...] }
+    res.status(200).json({ data: categories });
+  } catch (error: any) {
+    // MENAMBAHKAN PENANGANAN ERROR
+    res.status(500).json({ error: "Failed to fetch categories" });
+  }
 };

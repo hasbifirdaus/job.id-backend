@@ -120,11 +120,14 @@ model Jobs {
   city_id          Int
   title            String             @db.VarChar(150)
   description      String
+  requirements     String?            @db.Text         
+  benefits         String?            @db.Text         
   banner_image_url String?            @db.VarChar(255)
   min_salary       Decimal            @db.Decimal(12, 2)
   max_salary       Decimal            @db.Decimal(12, 2)
   deadline         DateTime
   is_published     Boolean
+  contract_type    ContractType       @default(FULL_TIME)
   deleted_at       DateTime?
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
@@ -373,4 +376,12 @@ enum PaymentMethod {
   BANK_TRANSFER
   EWALLET
   CREDIT_CARD
+}
+
+enum ContractType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
 }

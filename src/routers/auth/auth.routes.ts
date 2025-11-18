@@ -3,6 +3,7 @@ import {
   registerJobSeeker,
   registerCompanyAdmin,
   login,
+  getMe,
 } from "./auth.controller";
 import { validate } from "../../lib/middleware/validation.middleware";
 import {
@@ -26,16 +27,6 @@ router.post(
 );
 router.post("/login", validate(loginValidation), login);
 
-router.get("/me", verifyToken, async (req, res) => {
-  const user = (req as any).user;
-  res.status(200).json({
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    },
-  });
-});
+router.get("/me", verifyToken, getMe);
 
 export default router;

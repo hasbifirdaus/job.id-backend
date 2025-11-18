@@ -20,9 +20,10 @@ export const createCity = async (req: Request, res: Response) => {
 export const getAllCities = async (_req: Request, res: Response) => {
   try {
     const cities = await cityService.getAllCities();
-    res.status(200).json(cities);
+    // PERUBAHAN: Mengirimkan data dalam format { data: [...] }
+    res.status(200).json({ data: cities });
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to fetch cities" }); // Mengubah pesan error
   }
 };
 
