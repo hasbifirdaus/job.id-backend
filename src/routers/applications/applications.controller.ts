@@ -1,22 +1,46 @@
 import { Request, Response } from "express";
 import * as applicationsService from "./applications.service";
 
-export const applyJob = async (req: any, res: Response) => {
+export const applyJob = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user.id;
-    const { job_id, cover_letter, expected_salary } = req.body;
 
-    const cv_url = req.file?.path || null;
-    if (!cv_url) throw new Error("CV file is required");
+    const {
+      job_id,
+      expected_salary,
+      coverLetter,
+      fullName,
+      email,
+      phone,
+      linkedin,
+      experienceSummary,
+    } = req.body;
+
+    const cvFile = req.files?.cv?.[0];
+    const coverLetterFile = req.files?.coverLetterFile?.[0];
+
+    if (!cvFile) {
+      res.status(400).json({ error: "CV is required" });
+      return;
+    }
 
     const result = await applicationsService.applyJob(userId, {
       job_id,
-      cv_url,
-      cover_letter,
       expected_salary,
+      cv_url: cvFile.path,
+      cover_letter: coverLetter,
+      cover_letter_file_url: coverLetterFile?.path || null,
+      extra_info: {
+        fullName,
+        email,
+        phone,
+        linkedin,
+        experienceSummary,
+      },
     });
-    res.status(201).json({
-      message: "Application submitted successfully",
+
+    res.json({
+      message: "Application submitted",
       application: result,
     });
   } catch (err: any) {
@@ -24,7 +48,10 @@ export const applyJob = async (req: any, res: Response) => {
   }
 };
 
-export const getUserApplications = async (req: any, res: Response) => {
+export const getUserApplications = async (
+  req: any,
+  res: Response
+): Promise<void> => {
   try {
     const userId = req.user.id;
     const result = await applicationsService.getUserApplications(userId);
@@ -34,7 +61,10 @@ export const getUserApplications = async (req: any, res: Response) => {
   }
 };
 
-export const getApplicationDetail = async (req: any, res: Response) => {
+export const getApplicationDetail = async (
+  req: any,
+  res: Response
+): Promise<void> => {
   try {
     const userId = req.user.id;
     const applicationId = parseInt(req.params.applicationId);

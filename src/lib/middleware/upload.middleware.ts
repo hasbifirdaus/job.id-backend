@@ -3,19 +3,18 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 import cloudinary from "../config/claudinary";
 import { Request } from "express";
 
-const allowedFormats = ["application/pdf"];
+const allowed = ["application/pdf"];
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
+  params: async (req: Request, file: Express.Multer.File) => ({
     folder: "job-app/cv",
-    resource_type: "auto",
-    format: async (req: Request, file: Express.Multer.File) => "pdf",
-    public_id: (req: Request, file: Express.Multer.File) => {
-      const filename = file.originalname.split(".")[0];
-      return `${filename}_${Date.now()}`;
-    },
-  } as any,
+    resource_type: "raw",
+    format: "pdf",
+    public_id:
+      file.originalname.split(".")[0].replace(/\s/g, "_") + "_" + Date.now(),
+    access_mode: "public",
+  }),
 });
 
 export const upload = multer({
@@ -25,10 +24,10 @@ export const upload = multer({
     file: Express.Multer.File,
     cb: FileFilterCallback
   ) => {
-    if (!allowedFormats.includes(file.mimetype)) {
-      return cb(new Error("Invalid file format. Only PDF allowed."));
+    if (!allowed.includes(file.mimetype)) {
+      return cb(new Error("Only PDF allowed"));
     }
     cb(null, true);
   },
-  limits: { fileSize: 2 * 1024 * 1024 }, //max2mb
+  limits: { fileSize: 2 * 1024 * 1024 },
 });

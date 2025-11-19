@@ -77,9 +77,32 @@ export const registerCompanyAdminService = async (data: any) => {
     },
   });
 
+  const userWithCompanyId = {
+    ...newUser,
+    company_id: newCompany.id,
+  };
+
+  const token = jwt.sign(
+    {
+      id: userWithCompanyId.id,
+      email: userWithCompanyId.email,
+      role: userWithCompanyId.role,
+      company_id: userWithCompanyId.company_id,
+    },
+    JWT_SECRET,
+    { expiresIn: "2d" }
+  );
+
   return {
     message: "Company Admin registration successful",
-    user: newUser,
+    token, //
+    user: {
+      id: userWithCompanyId.id,
+      name: userWithCompanyId.name,
+      email: userWithCompanyId.email,
+      role: userWithCompanyId.role,
+      company_id: userWithCompanyId.company_id,
+    },
     company: newCompany,
   };
 };
@@ -124,5 +147,41 @@ export const loginService = async (data: any) => {
       name: user.name,
       company_id,
     },
+  };
+};
+
+export const getMeService = async (userId: string) => {
+  const user = await prisma.users.findUnique({
+    where: { id: userId },
+    include: {
+      companyAdmins: {
+        select: {
+          company_id: true,
+          is_primary: true,
+        },
+      },
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  let company_id: number | null = null;
+  if (user.role === UserRole.COMPANY_ADMIN) {
+    const companyAdmin =
+      user.companyAdmins.find((admin) => admin.is_primary) ||
+      user.companyAdmins[0];
+    company_id = companyAdmin ? companyAdmin.company_id : null;
+  }
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    company_id,
+    profile_image_url: user.profile_image_url,
+    verified: user.verified,
   };
 };

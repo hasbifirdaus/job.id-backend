@@ -32,6 +32,7 @@ export const getTagById = async (
 
 export const createTag = async (req: Request, res: Response): Promise<void> => {
   try {
+    // console.log("Received body:", req.body);
     const { name } = req.body;
     if (!name) {
       res.status(400).json({ error: "Name is required" });

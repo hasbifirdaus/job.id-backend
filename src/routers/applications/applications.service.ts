@@ -1,35 +1,42 @@
 import prisma from "../../lib/config/prisma";
 
 export const applyJob = async (user_id: string, data: any) => {
-  const { job_id, cv_url, cover_letter, expected_salary } = data;
+  const {
+    job_id,
+    expected_salary,
+    cv_url,
+    cover_letter,
+    cover_letter_file_url,
+    extra_info,
+  } = data;
 
-  const numericJobId = Number(job_id);
-  const numericSalary = Number(expected_salary);
+  const jobId = Number(job_id);
+  const salary = Number(expected_salary);
 
-  if (isNaN(numericJobId)) throw new Error("job_id must be a valid number");
-  if (isNaN(numericSalary))
-    throw new Error("expected_salary must be a valid number");
+  if (isNaN(jobId)) throw new Error("job_id must be number");
+  if (isNaN(salary)) throw new Error("expected_salary must be number");
 
-  const job = await prisma.jobs.findUnique({ where: { id: numericJobId } });
+  const job = await prisma.jobs.findUnique({ where: { id: jobId } });
   if (!job) throw new Error("Job not found");
 
-  const existing = await prisma.applications.findUnique({
-    where: { user_id_job_id: { user_id, job_id: numericJobId } },
+  const exists = await prisma.applications.findUnique({
+    where: { user_id_job_id: { user_id, job_id: jobId } },
   });
-  if (existing) throw new Error("You have already applied for this job");
 
-  const application = await prisma.applications.create({
+  if (exists) throw new Error("Already applied");
+
+  return await prisma.applications.create({
     data: {
       user_id,
-      job_id: numericJobId,
+      job_id: jobId,
+      expected_salary: salary,
       cv_url,
       cover_letter,
-      expected_salary: numericSalary,
+      cover_letter_file_url,
+      extra_info,
       status: "SUBMITTED",
     },
   });
-
-  return application;
 };
 
 export const getUserApplications = async (user_id: string) => {

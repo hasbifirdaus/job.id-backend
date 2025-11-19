@@ -120,11 +120,14 @@ model Jobs {
   city_id          Int
   title            String             @db.VarChar(150)
   description      String
+  requirements     String?            @db.Text         
+  benefits         String?            @db.Text         
   banner_image_url String?            @db.VarChar(255)
   min_salary       Decimal            @db.Decimal(12, 2)
   max_salary       Decimal            @db.Decimal(12, 2)
   deadline         DateTime
   is_published     Boolean
+  contract_type    ContractType       @default(FULL_TIME)
   deleted_at       DateTime?
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
@@ -173,12 +176,15 @@ model Applications {
   created_at        DateTime               @default(now())
   updated_at        DateTime               @updatedAt
   user_id           String                 @db.Uuid
+  extra_info Json?
+cover_letter_file_url String? @db.VarChar(255)
   histories         ApplicationHistories[]
   job               Jobs                   @relation(fields: [job_id], references: [id])
   test              PreSelectionTests?     @relation(fields: [test_id], references: [id])
   user              Users                  @relation(fields: [user_id], references: [id])
   interviews        Interviews[]
   answers           PreSelectionAnswers[]
+  
 
   @@unique([user_id, job_id])
 }
@@ -334,6 +340,7 @@ enum Gender {
 enum ApplicationStatus {
   SUBMITTED
   REVIEWED
+  INTERVIEW
   ACCEPTED
   REJECTED
 }
@@ -373,4 +380,12 @@ enum PaymentMethod {
   BANK_TRANSFER
   EWALLET
   CREDIT_CARD
+}
+
+enum ContractType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
 }

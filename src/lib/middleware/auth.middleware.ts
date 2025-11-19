@@ -8,14 +8,14 @@ if (!JWT_SECRET) {
   throw new Error("JWT_SECRET_KEY is not defined in .env");
 }
 
-interface DecodedUser extends JwtPayload {
+export interface DecodedUser extends JwtPayload {
   id: string;
   email: string;
   role: string;
   company_id?: number;
 }
 
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   user?: DecodedUser;
 }
 
