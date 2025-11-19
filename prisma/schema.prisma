@@ -269,6 +269,7 @@ model PreSelectionTests {
   id           Int                     @id @default(autoincrement())
   job_id       Int                     @unique
   title        String                  @db.VarChar(150)
+  status       String                  @default("draft") // "draft" | "published"
   deleted_at   DateTime?
   created_at   DateTime                @default(now())
   updated_at   DateTime                @updatedAt

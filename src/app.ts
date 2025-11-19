@@ -19,6 +19,7 @@ import jobPostingRoutes from "./routers/job-posting/jobs.routes";
 import uploadRoutes from "./routers/job-posting/upload-banner/upload.routes";
 import profileRoutes from "./routers/user-authentication-and-profiles/user-profile/profile.routes";
 import applyListRoutes from "./routers/apply-list-and-detail/apply.list.routes";
+import preSelectionTestRoutes from "./routers/pre-selection-test/preSelectionTest.routes";
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use("/api/jobPosting", jobPostingRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/applyList", applyListRoutes);
+app.use("/api/preselectiontest", preSelectionTestRoutes);
 
 scheduleInterviewReminder();
 
