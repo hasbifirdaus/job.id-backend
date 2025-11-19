@@ -17,6 +17,8 @@ import userJobRoutes from "./routers/job-and-company-discovery/jobs/job.routes";
 import companyRoutes from "./routers/job-and-company-discovery/companies/company.routes";
 import jobPostingRoutes from "./routers/job-posting/jobs.routes";
 import uploadRoutes from "./routers/job-posting/upload-banner/upload.routes";
+import profileRoutes from "./routers/user-authentication-and-profiles/user-profile/profile.routes";
+import applyListRoutes from "./routers/apply-list-and-detail/apply.list.routes";
 
 const app = express();
 
@@ -44,6 +46,8 @@ app.use("/api/jobs", userJobRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/jobPosting", jobPostingRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/applyList", applyListRoutes);
 
 scheduleInterviewReminder();
 

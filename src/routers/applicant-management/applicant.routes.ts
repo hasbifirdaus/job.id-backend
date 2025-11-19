@@ -5,6 +5,7 @@ import {
   getApplicantsByJob,
   getApplicationDetail,
   updateApplicationStatus,
+  getSignedCvUrl,
 } from "./applicant.controller";
 import {
   getApplicantsByJobQuerySchema,
@@ -19,8 +20,8 @@ const applicantRoutes = Router();
 applicantRoutes.get(
   "/company/jobs/:jobId/applicants",
   authMiddleware(["COMPANY_ADMIN"]),
-  validate(jobIdParamSchema, "params"), // Validasi jobId
-  validate(getApplicantsByJobQuerySchema, "query"), // Validasi query params
+  validate(jobIdParamSchema, "params"),
+  validate(getApplicantsByJobQuerySchema, "query"),
   getApplicantsByJob
 );
 
@@ -39,6 +40,13 @@ applicantRoutes.patch(
   validate(applicationIdParamSchema, "params"),
   validate(updateApplicationStatusBodySchema, "body"),
   updateApplicationStatus
+);
+
+applicantRoutes.get(
+  "/company/applications/:id/signed-cv-url",
+  authMiddleware(["COMPANY_ADMIN"]),
+  validate(applicationIdParamSchema, "params"),
+  getSignedCvUrl
 );
 
 export default applicantRoutes;

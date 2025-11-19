@@ -176,12 +176,15 @@ model Applications {
   created_at        DateTime               @default(now())
   updated_at        DateTime               @updatedAt
   user_id           String                 @db.Uuid
+  extra_info Json?
+cover_letter_file_url String? @db.VarChar(255)
   histories         ApplicationHistories[]
   job               Jobs                   @relation(fields: [job_id], references: [id])
   test              PreSelectionTests?     @relation(fields: [test_id], references: [id])
   user              Users                  @relation(fields: [user_id], references: [id])
   interviews        Interviews[]
   answers           PreSelectionAnswers[]
+  
 
   @@unique([user_id, job_id])
 }
@@ -337,6 +340,7 @@ enum Gender {
 enum ApplicationStatus {
   SUBMITTED
   REVIEWED
+  INTERVIEW
   ACCEPTED
   REJECTED
 }

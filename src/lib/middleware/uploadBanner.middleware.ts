@@ -11,7 +11,7 @@ const bannerStorage = new CloudinaryStorage({
   cloudinary,
   params: {
     // Folder khusus untuk banner job
-    folder: "eventup/job-banners",
+    folder: "/job-banners",
     resource_type: "image", // Opsi: Ubah ukuran gambar (opsional, disarankan untuk optimasi)
     transformation: [{ width: 1200, crop: "limit" }],
     public_id: (req: Request, file: Express.Multer.File) => {

@@ -23,7 +23,7 @@
   "dependencies": {
     "@prisma/client": "^6.7.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "bcryptjs": "^3.0.2",
+    "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.0",
     "cloudinary": "^1.41.3",
     "cookie-parser": "^1.4.7",
