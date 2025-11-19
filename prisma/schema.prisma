@@ -176,12 +176,15 @@ model Applications {
   created_at        DateTime               @default(now())
   updated_at        DateTime               @updatedAt
   user_id           String                 @db.Uuid
+  extra_info Json?
+cover_letter_file_url String? @db.VarChar(255)
   histories         ApplicationHistories[]
   job               Jobs                   @relation(fields: [job_id], references: [id])
   test              PreSelectionTests?     @relation(fields: [test_id], references: [id])
   user              Users                  @relation(fields: [user_id], references: [id])
   interviews        Interviews[]
   answers           PreSelectionAnswers[]
+  
 
   @@unique([user_id, job_id])
 }
@@ -266,6 +269,7 @@ model PreSelectionTests {
   id           Int                     @id @default(autoincrement())
   job_id       Int                     @unique
   title        String                  @db.VarChar(150)
+  status       String                  @default("draft") // "draft" | "published"
   deleted_at   DateTime?
   created_at   DateTime                @default(now())
   updated_at   DateTime                @updatedAt
@@ -337,6 +341,7 @@ enum Gender {
 enum ApplicationStatus {
   SUBMITTED
   REVIEWED
+  INTERVIEW
   ACCEPTED
   REJECTED
 }

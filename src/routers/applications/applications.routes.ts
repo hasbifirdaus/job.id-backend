@@ -17,8 +17,11 @@ const applicationsRoutes = Router();
 applicationsRoutes.post(
   "/",
   authMiddleware(),
-  upload.single("cv"),
-  validate(applyJobBodySchema, "body", { fileField: "cv" }),
+  upload.fields([
+    { name: "cv", maxCount: 1 },
+    { name: "coverLetterFile", maxCount: 1 },
+  ]),
+  validate(applyJobBodySchema, "body"),
   applyJob
 );
 
