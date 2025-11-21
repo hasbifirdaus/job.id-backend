@@ -1,55 +1,59 @@
+// modules/interview/interview.routes.ts
 import { Router } from "express";
-import {
-  createInterviewController,
-  getInterviewsController,
-  getInterviewByIdController,
-  updateInterviewController,
-  deleteInterviewController,
-} from "./interview.controller";
+import * as controller from "./interview.controller";
 import { authMiddleware } from "../../lib/middleware/auth.middleware";
 import { validate } from "../../lib/middleware/validation.middleware";
 import {
   createInterviewSchema,
+  createBulkInterviewSchema,
   interviewIdParamSchema,
   updateInterviewSchema,
 } from "./interview.validation";
 
-const interviewRoutes = Router();
+const router = Router();
 
-interviewRoutes.post(
+router.post(
   "/",
   authMiddleware(["COMPANY_ADMIN"]),
   validate(createInterviewSchema, "body"),
-  createInterviewController
+  controller.createInterviewController
 );
-
-interviewRoutes.get(
+router.post(
+  "/bulk",
+  authMiddleware(["COMPANY_ADMIN"]),
+  validate(createBulkInterviewSchema, "body"),
+  controller.createBulkInterviewsController
+);
+router.get(
   "/",
   authMiddleware(["COMPANY_ADMIN"]),
-  getInterviewsController
+  controller.getInterviewsController
 );
-
-interviewRoutes.get(
+router.get(
   "/:id",
   authMiddleware(["COMPANY_ADMIN"]),
   validate(interviewIdParamSchema, "params"),
-  getInterviewByIdController
+  controller.getInterviewByIdController
 );
-
-// PUT update
-interviewRoutes.put(
+router.put(
   "/:id",
   authMiddleware(["COMPANY_ADMIN"]),
   validate(interviewIdParamSchema, "params"),
   validate(updateInterviewSchema, "body"),
-  updateInterviewController
+  controller.updateInterviewController
 );
-
-interviewRoutes.delete(
+router.delete(
   "/:id",
   authMiddleware(["COMPANY_ADMIN"]),
   validate(interviewIdParamSchema, "params"),
-  deleteInterviewController
+  controller.deleteInterviewController
 );
 
-export default interviewRoutes;
+router.post(
+  "/:id/send-reminder",
+  authMiddleware(["COMPANY_ADMIN"]),
+  validate(interviewIdParamSchema, "params"),
+  controller.sendReminderByIdController
+);
+
+export default router;

@@ -1,40 +1,48 @@
-import { Router } from "express";
+import express from "express";
 import {
-  getDemographicsController,
-  getSalaryTrendsController,
-  getApplicantInterestsController,
-  getAnalyticsSummaryController,
-  getOtherAnalyticsController,
+  getAnalytics,
+  getKpiAnalytics,
+  getApplicantFlowAnalytics,
+  getFunnelAnalytics,
+  getTopCategoriesAnalytics,
+  getDemographicsAnalytics,
+  getSalaryTrendsAnalytics,
 } from "./analytics.controller";
 import { authMiddleware } from "../../lib/middleware/auth.middleware";
 
-const analyticsRoutes = Router();
+const analyticsRoutes = express.Router();
 
+// Hanya COMPANY_ADMIN yang bisa akses
+analyticsRoutes.get("/", authMiddleware(["COMPANY_ADMIN"]), getAnalytics);
 analyticsRoutes.get(
-  "/demographics",
+  "/kpi/:companyId",
   authMiddleware(["COMPANY_ADMIN"]),
-  getDemographicsController
+  getKpiAnalytics
 );
 analyticsRoutes.get(
-  "/salary-trends",
+  "/applicant-flow/:companyId",
   authMiddleware(["COMPANY_ADMIN"]),
-  getSalaryTrendsController
+  getApplicantFlowAnalytics
 );
 analyticsRoutes.get(
-  "/interests",
+  "/funnel/:companyId",
   authMiddleware(["COMPANY_ADMIN"]),
-  getApplicantInterestsController
+  getFunnelAnalytics
 );
 analyticsRoutes.get(
-  "/summary",
+  "/top-categories/:companyId",
   authMiddleware(["COMPANY_ADMIN"]),
-  getAnalyticsSummaryController
+  getTopCategoriesAnalytics
 );
-
 analyticsRoutes.get(
-  "/others",
+  "/demographics/:companyId",
   authMiddleware(["COMPANY_ADMIN"]),
-  getOtherAnalyticsController
+  getDemographicsAnalytics
+);
+analyticsRoutes.get(
+  "/salary-trends/:companyId",
+  authMiddleware(["COMPANY_ADMIN"]),
+  getSalaryTrendsAnalytics
 );
 
 export default analyticsRoutes;

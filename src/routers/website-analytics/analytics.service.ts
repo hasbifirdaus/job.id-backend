@@ -1,182 +1,229 @@
 import prisma from "../../lib/config/prisma";
 
-export const getUserDemographics = async () => {
-  const totalUsers = await prisma.users.count();
-
-  const genderStatsRaw = await prisma.users.groupBy({
-    by: ["gender"],
-    _count: { gender: true },
+// 1️⃣ KPI Data
+export const getKpiData = async (companyId: number) => {
+  const totalJobs = await prisma.jobs.count({
+    where: { company_id: companyId, deleted_at: null },
   });
 
-  const genderStats = genderStatsRaw
-    .filter((g) => g.gender !== null)
-    .map((g) => ({
-      gender: g.gender || "Unknown",
-      total: g._count.gender,
-    }));
-
-  const ageStats = await prisma.$queryRawUnsafe(`
-    SELECT 
-      CASE
-        WHEN EXTRACT(YEAR FROM AGE(dob)) BETWEEN 18 AND 25 THEN '18-25'
-        WHEN EXTRACT(YEAR FROM AGE(dob)) BETWEEN 26 AND 35 THEN '26-35'
-        WHEN EXTRACT(YEAR FROM AGE(dob)) BETWEEN 36 AND 45 THEN '36-45'
-        ELSE '46+'
-      END AS age_range,
-      COUNT(*) AS total
-    FROM "Users"
-    WHERE dob IS NOT NULL
-    GROUP BY age_range
-  `);
-
-  const locationStats = await prisma.cities.findMany({
-    select: {
-      name: true,
-      _count: { select: { jobs: true } },
-    },
-    take: 10,
-    orderBy: { jobs: { _count: "desc" } },
-  });
-
-  return { totalUsers, genderStats, ageStats, locationStats };
-};
-
-export const getSalaryTrends = async () => {
-  const trends = await prisma.jobs.groupBy({
-    by: ["city_id", "category_id"],
-    _avg: { min_salary: true, max_salary: true },
-    _count: { id: true },
-  });
-
-  const result = await Promise.all(
-    trends.map(async (t) => {
-      const city = await prisma.cities.findUnique({
-        where: { id: t.city_id },
-        select: { name: true },
-      });
-      const category = await prisma.categories.findUnique({
-        where: { id: t.category_id },
-        select: { name: true },
-      });
-
-      return {
-        city: city?.name || "Unknown",
-        category: category?.name || "Unknown",
-        avg_min_salary: t._avg.min_salary,
-        avg_max_salary: t._avg.max_salary,
-        job_count: t._count.id,
-      };
-    })
-  );
-
-  return result;
-};
-
-export const getApplicantInterests = async () => {
-  const data = await prisma.applications.groupBy({
+  const applicantsPerJobData = await prisma.applications.groupBy({
     by: ["job_id"],
-    _count: { job_id: true },
-  });
-
-  const topCategories = await Promise.all(
-    data.map(async (item) => {
-      const job = await prisma.jobs.findUnique({
-        where: { id: item.job_id },
-        select: { category: { select: { name: true } } },
-      });
-      return { category: job?.category.name, total: item._count.job_id };
-    })
-  );
-
-  const categoryMap: Record<string, number> = {};
-  topCategories.forEach((i) => {
-    if (!i.category) return;
-    categoryMap[i.category] = (categoryMap[i.category] || 0) + i.total;
-  });
-
-  const result = Object.entries(categoryMap)
-    .map(([name, total]) => ({ category: name, total }))
-    .sort((a, b) => b.total - a.total)
-    .slice(0, 5);
-
-  return result;
-};
-
-export const getAnalyticsSummary = async () => {
-  const totalUsers = await prisma.users.count();
-  const totalCompanies = await prisma.companies.count();
-  const totalApplications = await prisma.applications.count();
-  const avgSalary = await prisma.jobs.aggregate({
-    _avg: { min_salary: true, max_salary: true },
-  });
-
-  const avgAge = await prisma.$queryRawUnsafe<{ avg_age: number }[]>(`
-    SELECT ROUND(AVG(EXTRACT(YEAR FROM AGE(dob)))) AS avg_age
-    FROM "Users"
-    WHERE dob IS NOT NULL
-  `);
-
-  const result = {
-    totalUsers,
-    totalCompanies,
-    totalApplications,
-    avgSalary: avgSalary._avg,
-    avgAge: avgAge?.[0]?.avg_age || null,
-  };
-
-  return result;
-};
-
-export const getOtherAnalytics = async () => {
-  const topSkillsRaw = await prisma.userSkills.groupBy({
-    by: ["tag_id"],
-    _count: { tag_id: true },
-  });
-
-  const topSkills = await Promise.all(
-    topSkillsRaw
-      .sort((a, b) => b._count.tag_id - a._count.tag_id)
-      .slice(0, 5)
-      .map(async (s) => {
-        const tag = await prisma.tags.findUnique({
-          where: { id: s.tag_id },
-          select: { name: true },
-        });
-        return { skill: tag?.name || "Unknown", total_users: s._count.tag_id };
-      })
-  );
-
-  const activeCompaniesRaw = await prisma.jobs.groupBy({
-    by: ["company_id"],
+    where: { job: { company_id: companyId }, job_id: { not: undefined } },
     _count: { id: true },
   });
 
-  const activeCompanies = await Promise.all(
-    activeCompaniesRaw
-      .sort((a, b) => b._count.id - a._count.id)
-      .slice(0, 5)
-      .map(async (c) => {
-        const company = await prisma.companies.findUnique({
-          where: { id: c.company_id },
-          select: { name: true },
-        });
-        return {
-          company: company?.name || "Unknown",
-          total_jobs: c._count.id,
-        };
-      })
+  const totalApplicants = applicantsPerJobData.reduce(
+    (sum, job) => sum + (job._count?.id || 0),
+    0
   );
 
-  const totalJobs = await prisma.jobs.count();
-  const totalApplications = await prisma.applications.count();
-  const conversionRate =
-    totalJobs > 0
-      ? Number(((totalApplications / totalJobs) * 100).toFixed(2))
+  const avgApplicantsPerJob = totalJobs > 0 ? totalApplicants / totalJobs : 0;
+
+  const acceptedApplications = await prisma.applications.findMany({
+    where: {
+      job: { company_id: companyId },
+      status: "ACCEPTED",
+      created_at: { not: undefined },
+    },
+    select: { created_at: true, updated_at: true },
+  });
+
+  const avgHiringTime =
+    acceptedApplications.length > 0
+      ? Math.round(
+          acceptedApplications.reduce((sum, a) => {
+            const diff =
+              new Date(a.updated_at).getTime() -
+              new Date(a.created_at).getTime();
+            return sum + diff;
+          }, 0) /
+            acceptedApplications.length /
+            (1000 * 60 * 60 * 24)
+        )
       : 0;
 
+  const pageViewsData = await prisma.pageViews.aggregate({
+    _sum: { views: true },
+    where: { company_id: companyId },
+  });
+  const pageViews = pageViewsData._sum.views || 0;
+
+  const acceptedCount = await prisma.applications.count({
+    where: { job: { company_id: companyId }, status: "ACCEPTED" },
+  });
+  const totalCount = await prisma.applications.count({
+    where: { job: { company_id: companyId } },
+  });
+  const conversionRate =
+    totalCount > 0
+      ? ((acceptedCount / totalCount) * 100).toFixed(2) + "%"
+      : "0%";
+
   return {
-    topSkills,
-    activeCompanies,
     conversionRate,
+    applicantsPerJob: Math.round(avgApplicantsPerJob),
+    avgHiringTime: `${avgHiringTime} hari`,
+    pageViews,
   };
+};
+
+// 2️⃣ Applicant Flow
+export const getApplicantFlow = async (companyId: number) => {
+  const applications = await prisma.applications.findMany({
+    where: { job: { company_id: companyId }, created_at: { not: undefined } },
+    select: { created_at: true },
+  });
+
+  const months: Record<string, number> = {};
+
+  applications.forEach((app) => {
+    const month = new Date(app.created_at).toLocaleString("default", {
+      month: "short",
+    });
+    months[month] = (months[month] || 0) + 1;
+  });
+
+  const orderedMonths = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  return orderedMonths.map((m) => ({ name: m, applications: months[m] || 0 }));
+};
+
+// 3️⃣ Funnel Data
+export const getFunnelData = async (companyId: number) => {
+  const statuses = [
+    "SUBMITTED",
+    "REVIEWED",
+    "INTERVIEW",
+    "ACCEPTED",
+    "REJECTED",
+  ];
+  const funnel: { name: string; value: number }[] = [];
+
+  for (const status of statuses) {
+    const count = await prisma.applications.count({
+      where: { job: { company_id: companyId }, status: status as any },
+    });
+
+    funnel.push({
+      name:
+        status === "SUBMITTED"
+          ? "Applied"
+          : status === "ACCEPTED"
+            ? "Hired"
+            : status,
+      value: count,
+    });
+  }
+
+  return funnel;
+};
+
+// 4️⃣ Top Categories
+export const getTopCategories = async (companyId: number) => {
+  const jobs = await prisma.jobs.findMany({
+    where: { company_id: companyId },
+    select: { category_id: true },
+  });
+
+  const categoryCount: Record<number, number> = {};
+  jobs.forEach((job) => {
+    if (job.category_id !== undefined) {
+      categoryCount[job.category_id] =
+        (categoryCount[job.category_id] || 0) + 1;
+    }
+  });
+
+  const categories = await prisma.categories.findMany({
+    where: { id: { in: Object.keys(categoryCount).map(Number) } },
+  });
+
+  return categories.map((cat) => ({
+    name: cat.name,
+    value: categoryCount[cat.id] || 0,
+  }));
+};
+
+// 5️⃣ Demographics
+export const getDemographics = async (companyId: number) => {
+  const users = await prisma.users.findMany({
+    where: { applications: { some: { job: { company_id: companyId } } } },
+    select: { gender: true, dob: true, city: { select: { name: true } } },
+  });
+
+  const now = new Date().getFullYear();
+
+  const ageGroups: Record<string, number> = {
+    "18-25": 0,
+    "26-30": 0,
+    "31-35": 0,
+    "36-40": 0,
+  };
+  const genderGroups: Record<string, number> = { Pria: 0, Wanita: 0 };
+  const locationGroups: Record<string, number> = {};
+
+  users.forEach((u) => {
+    // Age
+    if (u.dob) {
+      const age = now - u.dob.getFullYear();
+      if (age >= 18 && age <= 25) ageGroups["18-25"] += 1;
+      else if (age >= 26 && age <= 30) ageGroups["26-30"] += 1;
+      else if (age >= 31 && age <= 35) ageGroups["31-35"] += 1;
+      else if (age >= 36 && age <= 40) ageGroups["36-40"] += 1;
+    }
+
+    // Gender
+    if (u.gender === "MALE") genderGroups["Pria"] += 1;
+    else if (u.gender === "FEMALE") genderGroups["Wanita"] += 1;
+
+    // Location
+    if (u.city?.name)
+      locationGroups[u.city.name] = (locationGroups[u.city.name] || 0) + 1;
+  });
+
+  return {
+    age: Object.entries(ageGroups).map(([name, value]) => ({ name, value })),
+    gender: Object.entries(genderGroups).map(([name, value]) => ({
+      name,
+      value,
+    })),
+    location: Object.entries(locationGroups).map(([name, value]) => ({
+      name,
+      value,
+    })),
+  };
+};
+
+// 6️⃣ Salary Trends
+export const getSalaryTrends = async (companyId: number) => {
+  const jobs = await prisma.jobs.findMany({
+    where: { company_id: companyId },
+    select: { title: true, min_salary: true, max_salary: true },
+  });
+
+  return jobs.map((job) => ({
+    position: job.title,
+    avgSalary: Number((Number(job.min_salary) + Number(job.max_salary)) / 2),
+  }));
+};
+
+export const getTotalPageViews = async (companyId: number) => {
+  const result = await prisma.pageViews.aggregate({
+    where: { company_id: companyId },
+    _sum: { views: true },
+  });
+
+  return result._sum.views || 0;
 };

@@ -1,5 +1,6 @@
+// modules/interview/interview.controller.ts
 import { Request, Response } from "express";
-import * as interviewService from "./interview.service";
+import * as service from "./interview.service";
 
 export const createInterviewController = async (
   req: Request,
@@ -7,25 +8,33 @@ export const createInterviewController = async (
 ) => {
   try {
     const companyId = (req as any).user.company_id;
-    const interview = await interviewService.createInterview(
-      req.body,
-      companyId
-    );
-    res
-      .status(201)
-      .json({ message: "Interview scheduled successfully", interview });
+    const interview = await service.createInterview(req.body, companyId);
+    res.status(201).json({ success: true, data: interview });
   } catch (err: any) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+
+export const createBulkInterviewsController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const companyId = (req as any).user.company_id;
+    const created = await service.createBulkInterviews(req.body, companyId);
+    res.status(201).json({ success: true, data: created });
+  } catch (err: any) {
+    res.status(400).json({ success: false, error: err.message });
   }
 };
 
 export const getInterviewsController = async (req: Request, res: Response) => {
   try {
     const companyId = (req as any).user.company_id;
-    const interviews = await interviewService.getInterviews(companyId);
-    res.status(200).json(interviews);
+    const interviews = await service.getInterviews(companyId);
+    res.status(200).json({ success: true, data: interviews });
   } catch (err: any) {
-    res.status(400).json({ err: err.message });
+    res.status(400).json({ success: false, error: err.message });
   }
 };
 
@@ -36,10 +45,10 @@ export const getInterviewByIdController = async (
   try {
     const companyId = (req as any).user.company_id;
     const id = parseInt(req.params.id);
-    const interview = await interviewService.getInterviwById(id, companyId);
-    res.status(200).json(interview);
+    const interview = await service.getInterviewById(id, companyId);
+    res.status(200).json({ success: true, data: interview });
   } catch (err: any) {
-    res.status(400).json({ err: err.message });
+    res.status(400).json({ success: false, error: err.message });
   }
 };
 
@@ -48,18 +57,12 @@ export const updateInterviewController = async (
   res: Response
 ) => {
   try {
-    const comapanyId = (req as any).user.company_id;
+    const companyId = (req as any).user.company_id;
     const id = parseInt(req.params.id);
-    const interview = await interviewService.updateInterview(
-      id,
-      req.body,
-      comapanyId
-    );
-    res
-      .status(200)
-      .json({ message: "Interview updated successfully", interview });
+    const updated = await service.updateInterview(id, req.body, companyId);
+    res.status(200).json({ success: true, data: updated });
   } catch (err: any) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ success: false, error: err.message });
   }
 };
 
@@ -70,9 +73,30 @@ export const deleteInterviewController = async (
   try {
     const companyId = (req as any).user.company_id;
     const id = parseInt(req.params.id);
-    const result = await interviewService.deleteInterview(id, companyId);
-    res.status(200).json(result);
+    const result = await service.deleteInterview(id, companyId);
+    res.status(200).json({ success: true, data: result });
   } catch (err: any) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+
+export const sendReminderByIdController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const interviewId = Number(req.params.id);
+    const companyId = (req as any).user.company_id;
+
+    await service.sendReminderById(interviewId, companyId);
+
+    res.status(200).json({
+      message: "Reminder sent successfully",
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
   }
 };
