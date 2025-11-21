@@ -9,30 +9,33 @@ datasource db {
 }
 
 model Users {
-  role                  UserRole               @default(JOB_SEEKER)
-  name                  String                 @db.VarChar(100)
-  email                 String                 @unique @db.VarChar(100)
-  password              String                 @db.VarChar(255)
-  dob                   DateTime?
-  gender                Gender?
-  education             String?                @db.VarChar(100)
-  address               String?
-  profile_image_url     String?                @db.VarChar(255)
-  verified              Boolean                @default(false)
-  verify_token          String?                @db.VarChar(255)
+  role                    UserRole               @default(JOB_SEEKER)
+  name                    String                 @db.VarChar(100)
+  email                   String                 @unique @db.VarChar(100)
+  password                String                 @db.VarChar(255)
+  dob                     DateTime?
+  gender                  Gender?
+  education               String?                @db.VarChar(100)
+  address                 String?
+  profile_image_url       String?                @db.VarChar(255)
+  verified                Boolean                @default(false)
+  verify_token            String?                @db.VarChar(255)
   verify_token_expired_at DateTime?
-  deleted_at            DateTime?
-  created_at            DateTime               @default(now())
-  updated_at            DateTime               @updatedAt
-  id                    String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  applicationHistories  ApplicationHistories[] @relation("HistoryChangedBy")
-  applications          Applications[]
-  companyAdmins         CompanyAdmins[]
-  interviews            Interviews[]           @relation("InterviewChangedBy")
-  approvedSubscriptions Subscriptions[]        @relation("ApprovedBy")
-  subscriptions         Subscriptions[]
-  authProviders         UserAuthProviders[]
-  skills                UserSkills[]
+  deleted_at              DateTime?
+  created_at              DateTime               @default(now())
+  updated_at              DateTime               @updatedAt
+  id                      String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  applicationHistories    ApplicationHistories[] @relation("HistoryChangedBy")
+  applications            Applications[]
+  companyAdmins           CompanyAdmins[]
+  interviews              Interviews[]           @relation("InterviewChangedBy")
+  approvedSubscriptions   Subscriptions[]        @relation("ApprovedBy")
+  subscriptions           Subscriptions[]
+  authProviders           UserAuthProviders[]
+  skills                  UserSkills[]
+  city_id                 Int? // optional jika user belum memilih kota
+
+  city Cities? @relation(fields: [city_id], references: [id])
 
   @@index([deleted_at])
 }
@@ -61,6 +64,7 @@ model Companies {
   socials        CompanySocialLinks[]
   tags           CompanyTags[]
   jobs           Jobs[]
+  pageViews      PageViews[]
 
   @@index([deleted_at])
   @@index([name])
@@ -111,6 +115,7 @@ model Cities {
   updated_at  DateTime  @updatedAt
   province    Provinces @relation(fields: [province_id], references: [id])
   jobs        Jobs[]
+  users       Users[]
 }
 
 model Jobs {
@@ -120,8 +125,8 @@ model Jobs {
   city_id          Int
   title            String             @db.VarChar(150)
   description      String
-  requirements     String?            @db.Text         
-  benefits         String?            @db.Text         
+  requirements     String?            @db.Text
+  benefits         String?            @db.Text
   banner_image_url String?            @db.VarChar(255)
   min_salary       Decimal            @db.Decimal(12, 2)
   max_salary       Decimal            @db.Decimal(12, 2)
@@ -137,6 +142,7 @@ model Jobs {
   city             Cities             @relation(fields: [city_id], references: [id])
   company          Companies          @relation(fields: [company_id], references: [id])
   preSelectionTest PreSelectionTests?
+  pageViews        PageViews[]
 
   @@index([deleted_at])
   @@index([title])
@@ -163,28 +169,27 @@ model JobTags {
 }
 
 model Applications {
-  id                Int                    @id @default(autoincrement())
-  job_id            Int
-  test_id           Int?
-  cv_url            String?                @db.VarChar(255)
-  cover_letter      String?
-  expected_salary   Decimal                @db.Decimal(12, 2)
-  status            ApplicationStatus      @default(SUBMITTED)
-  feedback          String?
-  test_score        Decimal?               @db.Decimal(5, 2)
-  test_completed_at DateTime?
-  created_at        DateTime               @default(now())
-  updated_at        DateTime               @updatedAt
-  user_id           String                 @db.Uuid
-  extra_info Json?
-cover_letter_file_url String? @db.VarChar(255)
-  histories         ApplicationHistories[]
-  job               Jobs                   @relation(fields: [job_id], references: [id])
-  test              PreSelectionTests?     @relation(fields: [test_id], references: [id])
-  user              Users                  @relation(fields: [user_id], references: [id])
-  interviews        Interviews[]
-  answers           PreSelectionAnswers[]
-  
+  id                    Int                    @id @default(autoincrement())
+  job_id                Int
+  test_id               Int?
+  cv_url                String?                @db.VarChar(255)
+  cover_letter          String?
+  expected_salary       Decimal                @db.Decimal(12, 2)
+  status                ApplicationStatus      @default(SUBMITTED)
+  feedback              String?
+  test_score            Decimal?               @db.Decimal(5, 2)
+  test_completed_at     DateTime?
+  created_at            DateTime               @default(now())
+  updated_at            DateTime               @updatedAt
+  user_id               String                 @db.Uuid
+  extra_info            Json?
+  cover_letter_file_url String?                @db.VarChar(255)
+  histories             ApplicationHistories[]
+  job                   Jobs                   @relation(fields: [job_id], references: [id])
+  test                  PreSelectionTests?     @relation(fields: [test_id], references: [id])
+  user                  Users                  @relation(fields: [user_id], references: [id])
+  interviews            Interviews[]
+  answers               PreSelectionAnswers[]
 
   @@unique([user_id, job_id])
 }
@@ -324,6 +329,22 @@ model CompanyTags {
   tag        Tags      @relation(fields: [tag_id], references: [id])
 
   @@id([company_id, tag_id])
+}
+
+model PageViews {
+  id         Int      @id @default(autoincrement())
+  company_id Int
+  job_id     Int?
+  views      Int      @default(0)
+  date       DateTime @default(now())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  company Companies @relation(fields: [company_id], references: [id])
+  job     Jobs?     @relation(fields: [job_id], references: [id])
+
+  @@index([company_id])
+  @@index([job_id])
 }
 
 enum UserRole {
